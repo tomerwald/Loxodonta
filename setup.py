@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+from distutils.core import setup
+
+setup(
+    name='loxodonta',
+    version='0.0.1',
+    description='Network traffic visualization',
+    author='Tomer Waldmann',
+    author_email='tomer.valdman@gmail.com',
+    packages=['loxodonta'],
+    install_requires=['pyshark']
+)
