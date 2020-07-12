@@ -9,5 +9,5 @@ setup(
     author='Tomer Waldmann',
     author_email='tomer.valdman@gmail.com',
     packages=['loxodonta'],
-    install_requires=['pyshark', 'tqdm']
+    install_requires=['pyshark', 'tqdm', 'neo4j']
 )

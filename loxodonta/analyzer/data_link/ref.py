@@ -4,5 +4,5 @@ class Entities:
 
 
 class Connections:
-    EthTraffic = "Ethernet Traffic"
-    ManufResolve = "Manufacturer resolve"
+    EthTraffic = "EthernetTraffic"
+    ManufResolve = "ManufacturerResolve"
