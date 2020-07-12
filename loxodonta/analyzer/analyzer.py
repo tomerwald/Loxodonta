@@ -1,6 +1,7 @@
 import pyshark
 import functools
 import tqdm
+from loxodonta.logger import loxo_logger
 
 
 class Analyzer:
@@ -20,8 +21,11 @@ class Analyzer:
         for layer in packet.layers:
             if layer.layer_name in self.layer_subscriptions:
                 analyzers_to_run += self.layer_subscriptions[layer.layer_name]
+            else:
+                loxo_logger.debug(f"Unselected layer: {layer.layer_name}")
         return functools.reduce(lambda x, y: x + y, [proto().analyze(packet) for proto in analyzers_to_run])
 
     def analyze_file_capture(self, capture):
+        loxo_logger.info(f"Analyzing packets from capture")
         for packet in tqdm.tqdm(capture, unit="Packets"):
             yield self.analyze_packet(packet)
