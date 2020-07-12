@@ -9,7 +9,7 @@ class ProtocolAnalyzer:
         pass
 
     @abstractmethod
-    def analyze_packet(self, packet):
+    def analyze(self, packet):
         """
         analyze a packet and return newly learned facts
         :param Packet packet: A packet object
