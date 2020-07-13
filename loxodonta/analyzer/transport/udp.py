@@ -1,9 +1,9 @@
-from loxodonta.analyzer.protocol import ProtocolAnalyzer
+from loxodonta.analyzer.protocol import Protocol
 from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import transport, network
 
 
-class UDP(ProtocolAnalyzer):
+class UDP(Protocol):
     target_layer = 'udp'
 
     def analyze(self, packet):

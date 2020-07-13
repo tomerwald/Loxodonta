@@ -2,7 +2,7 @@ from abc import abstractmethod
 from pyshark.packet.packet import Packet
 
 
-class ProtocolAnalyzer:
+class Protocol:
     target_layer = None
 
     def __init__(self):

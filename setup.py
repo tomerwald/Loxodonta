@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='loxodonta',
-    version='0.0.1',
+    version='0.0.2',
     description='Network traffic visualization',
     author='Tomer Waldmann',
     author_email='tomer.valdman@gmail.com',
