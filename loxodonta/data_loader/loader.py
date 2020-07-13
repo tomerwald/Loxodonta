@@ -4,7 +4,7 @@ from loxodonta.logger import loxo_logger
 
 class Neo4jConnector:
     def __init__(self, uri, auth):
-        loxo_logger.info(f"Connecting to :{uri}")
+        loxo_logger.info(f"Connecting to: {uri}")
         self.connection = GraphDatabase.driver(uri=uri, auth=auth)
 
     def run_query(self, cypher_command):
