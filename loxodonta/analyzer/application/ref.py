@@ -3,6 +3,8 @@ class Entities:
     hostname = "Hostname"
     UserAgent = "UserAgent"
     Service = "Service"
+    SSHServer = "SSHServer"
+    SSHClient = "SSHClient"
 
 
 class Connections:
@@ -10,3 +12,5 @@ class Connections:
     HTTP = "HTTPConnection"
     HTTPUserAgent = "HTTPUserAgent"
     ResolvedHostname = "ResolvedHostname"
+    SSHClient = "SSHClient"
+    SSHConnection = "SSHConnection"
