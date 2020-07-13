@@ -1,5 +1,5 @@
-from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import transport, network
+from loxodonta.analyzer.fact import Entity, Connection
 
 
 class TCP(network.IPProtocol):

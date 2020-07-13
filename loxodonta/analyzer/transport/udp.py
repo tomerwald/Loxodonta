@@ -1,5 +1,5 @@
-from loxodonta.analyzer.fact import Connection
 from loxodonta.analyzer import transport, network
+from loxodonta.analyzer.fact import Connection
 
 
 class UDP(network.IPProtocol):

@@ -1,6 +1,6 @@
-from loxodonta.analyzer.protocol import Protocol
 from loxodonta.analyzer.fact import Entity, Connection
-from loxodonta.analyzer import transport, network, application
+from loxodonta.analyzer import network, application
+from loxodonta.analyzer.fact import Entity, Connection
 
 
 class DNS(network.IPProtocol):

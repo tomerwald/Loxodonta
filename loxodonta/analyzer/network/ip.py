@@ -1,8 +1,10 @@
 from abc import abstractmethod
+
 from pyshark.packet.packet import Packet
-from loxodonta.analyzer.protocol import Protocol
-from loxodonta.analyzer.fact import Entity
+
 from loxodonta.analyzer import network
+from loxodonta.analyzer.fact import Entity
+from loxodonta.analyzer.protocol import Protocol
 
 
 class IPProtocol(Protocol):

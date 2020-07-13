@@ -1,4 +1,5 @@
 from neo4j import GraphDatabase
+
 from loxodonta.logger import loxo_logger
 
 
