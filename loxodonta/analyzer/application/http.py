@@ -1,22 +1,13 @@
-from loxodonta.analyzer.protocol import Protocol
 from loxodonta.analyzer.fact import Entity, Connection
-from loxodonta.analyzer import transport, network, application
+from loxodonta.analyzer import network, application
 
 
-class HTTP(Protocol):
+class HTTP(network.IPProtocol):
     target_layer = 'http'
 
-    @staticmethod
-    def _analyze_request(packet):
+    def _analyze_request(self, packet):
         out_facts = list()
-        if hasattr(packet, "ip"):
-            client = Entity(network.Entities.IP, packet.ip.src)
-            server = Entity(network.Entities.IP, packet.ip.dst)
-        elif hasattr(packet, "ipv6"):
-            client = Entity(network.Entities.IPv6, packet.ipv6.src)
-            server = Entity(network.Entities.IPv6, packet.ipv6.dst)
-        else:
-            raise AttributeError("No valid network layer found")
+        client, server = self._get_ip_entities(packet)
         if server.entity_id not in str(packet.http.host):
             server_host = Entity(application.Entities.hostname, packet.http.host)
             out_facts.append(Connection(application.Connections.ResolvedHostname, server, server_host))
@@ -28,15 +19,9 @@ class HTTP(Protocol):
         out_facts.append(Connection(application.Connections.HTTP, user_agent, server, uri=[packet.http.request_uri]))
         return out_facts
 
-    @staticmethod
-    def _analyze_response(packet):
+    def _analyze_response(self, packet):
         fact_output = list()
-        if hasattr(packet, "ip"):
-            server = Entity(network.Entities.IP, packet.ip.src)
-        elif hasattr(packet, "ipv6"):
-            server = Entity(network.Entities.IPv6, packet.ipv6.src)
-        else:
-            raise AttributeError("No valid network layer found")
+        server, _ = self._get_ip_entities(packet)
         if hasattr(packet.http, "server"):
             webservice = Entity(application.Entities.WebServer, packet.http.server)
             fact_output.append(Connection(application.Connections.ActiveService, server, webservice))
