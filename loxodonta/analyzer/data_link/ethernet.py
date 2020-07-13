@@ -1,4 +1,4 @@
-from loxodonta.analyzer.protocol import ProtocolAnalyzer
+from loxodonta.analyzer.protocol import Protocol
 from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import data_link
 import re
@@ -6,7 +6,7 @@ import re
 MAC_BLACK_LIST = ["01:00:5e[:\d\w]+", "00:00:00:00:00:00", "ff:ff:ff:ff:ff:ff"]
 
 
-class Ethernet(ProtocolAnalyzer):
+class Ethernet(Protocol):
     target_layer = 'eth'
 
     @staticmethod

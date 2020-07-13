@@ -15,10 +15,11 @@ class Entity:
 
 
 class Connection:
-    def __init__(self, connection_type, side_a, side_b):
+    def __init__(self, connection_type, side_a, side_b, **kwargs):
         self.connection_type = connection_type
         self.side_a = side_a
         self.side_b = side_b
+        self.kwargs = kwargs
 
     def __eq__(self, other):
         sides_equal = self.side_a == other.side_a and self.side_b == other.side_b

@@ -1,9 +1,9 @@
-from loxodonta.analyzer.protocol import ProtocolAnalyzer
+from loxodonta.analyzer.protocol import Protocol
 from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import data_link, network
 
 
-class ARP(ProtocolAnalyzer):
+class ARP(Protocol):
     target_layer = 'arp'
 
     def analyze(self, packet):
