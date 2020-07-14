@@ -1,10 +1,13 @@
 class Entities:
     WebServer = "WebServer"
-    hostname = "Hostname"
+    Hostname = "Hostname"
     UserAgent = "UserAgent"
     Service = "Service"
     SSHServer = "SSHServer"
     SSHClient = "SSHClient"
+    BuildNumber = "BuildNumber"
+    Domain = "Domain"
+    User = "User"
 
 
 class Connections:
@@ -15,3 +18,8 @@ class Connections:
     ResolvedHostname = "ResolvedHostname"
     SSHClient = "SSHClient"
     SSHConnection = "SSHConnection"
+    ComputerInfo = "ComputerInfo"
+    LocalUser = "LocalUser"
+    DomainUser = "DomainUser"
+    DomainComputer = "DomainComputer"
+    SMB = "SMBConnection"

@@ -9,14 +9,14 @@ class HTTP(network.IPProtocol):
         out_facts = list()
         client, server = self._get_ip_entities(packet)
         if server.entity_id not in str(packet.http.host):
-            server_host = Entity(application.Entities.hostname, packet.http.host)
+            server_host = Entity(application.Entities.Hostname, packet.http.host)
             out_facts.append(Connection(application.Connections.ResolvedHostname, server, server_host))
         if hasattr(packet.http, "user_agent"):
             user_agent = Entity(application.Entities.UserAgent, packet.http.user_agent)
         else:
             user_agent = Entity(application.Entities.UserAgent, "Unknown user agent")
-        out_facts.append(Connection(application.Connections.HTTPUserAgent, client, user_agent))
-        out_facts.append(Connection(application.Connections.HTTP, user_agent, server, uri=[packet.http.request_uri]))
+        out_facts.append(Connection(application.Connections.HTTP, client, server, uri=[packet.http.request_uri],
+                                    user_agent=user_agent.entity_id))
         return out_facts
 
     def _analyze_response(self, packet):

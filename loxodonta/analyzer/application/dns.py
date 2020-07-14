@@ -12,7 +12,7 @@ class DNS(network.IPProtocol):
             server, _ = self._get_ip_entities(packet)
             dns_server = Entity(application.Entities.Service, "DNSServer")
             fact_output.append(Connection(application.Connections.ActiveService, server, dns_server))
-            hostname = Entity(application.Entities.hostname, packet.dns.cname)
+            hostname = Entity(application.Entities.Hostname, packet.dns.qry_name)
             answer = Entity(network.Entities.IP, packet.dns.a)
             fact_output.append(Connection(application.Connections.ResolvedHostname, answer, hostname))
         return fact_output

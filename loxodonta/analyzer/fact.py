@@ -1,6 +1,29 @@
 from datetime import datetime
 
 
+def hash_item(item):
+    if type(item) == dict:
+        return hash_walk_dict(item)
+    elif type(item) == list:
+        return hash_walk_list(item)
+    else:
+        return hash(item)
+
+
+def hash_walk_list(args):
+    sum_total = 0
+    for i in args:
+        sum_total += hash_item(i)
+    return sum_total
+
+
+def hash_walk_dict(kwargs):
+    sum_total = 0
+    for k, v in kwargs.items():
+        sum_total += hash_item(v) + hash_item(k)
+    return sum_total
+
+
 class Entity:
     def __init__(self, entity_type, entity_id, creation_time=None):
         self.entity_type = entity_type
@@ -23,7 +46,8 @@ class Connection:
 
     def __eq__(self, other):
         sides_equal = self.side_a == other.side_a and self.side_b == other.side_b
-        return self.connection_type == other.connection_type and sides_equal
+        return self.connection_type == other.connection_type and sides_equal and self.kwargs == other.kwargs
 
     def __hash__(self):
-        return hash(hash(self.connection_type) + hash(self.side_a) + hash(self.side_b))
+        kwargs_hash = hash_walk_dict(self.kwargs)
+        return hash(hash(self.connection_type) + hash(self.side_a) + hash(self.side_b) + kwargs_hash)

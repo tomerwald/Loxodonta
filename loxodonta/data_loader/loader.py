@@ -25,8 +25,7 @@ class Neo4jConnector:
             if isinstance(v, list) and k in remote_connection._properties:
                 v += remote_connection._properties[k]
                 v = list(set(v))
-            else:
-                params_str += f'set p.{k} = {v}\r\n'
+            params_str += f'set p.{k} = {v}\r\n'
         return params_str
 
     def update_connection_params(self, connection, remote_connection):
