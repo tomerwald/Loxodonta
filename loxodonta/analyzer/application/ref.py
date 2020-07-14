@@ -10,6 +10,7 @@ class Entities:
 class Connections:
     ActiveService = "ActiveService"
     HTTP = "HTTPConnection"
+    HTTPS = "HTTPSConnection"
     HTTPUserAgent = "HTTPUserAgent"
     ResolvedHostname = "ResolvedHostname"
     SSHClient = "SSHClient"

@@ -34,3 +34,14 @@ class HTTP(network.IPProtocol):
         else:
             fact_output += self._analyze_request(packet)
         return fact_output
+
+
+class HTTPS(network.IPProtocol):
+    target_layer = 'tls'
+
+    def analyze(self, packet):
+        fact_output = list()
+        source, destination = self._get_ip_entities(packet)
+        if hasattr(packet.tls, "record") and "http-over-tls" in str(packet.tls.record):
+            fact_output.append(Connection(application.Connections.HTTPS, source, destination))
+        return fact_output
