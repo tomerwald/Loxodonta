@@ -1,6 +1,6 @@
-from loxodonta.analyzer.protocol import Protocol
-from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import data_link, network
+from loxodonta.analyzer.fact import Entity, Connection
+from loxodonta.analyzer.protocol import Protocol
 
 
 class ARP(Protocol):

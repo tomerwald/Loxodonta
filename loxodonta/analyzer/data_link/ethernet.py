@@ -1,7 +1,8 @@
-from loxodonta.analyzer.protocol import Protocol
-from loxodonta.analyzer.fact import Entity, Connection
-from loxodonta.analyzer import data_link
 import re
+
+from loxodonta.analyzer import data_link
+from loxodonta.analyzer.fact import Entity, Connection
+from loxodonta.analyzer.protocol import Protocol
 
 MAC_BLACK_LIST = ["01:00:5e[:\d\w]+", "00:00:00:00:00:00", "ff:ff:ff:ff:ff:ff"]
 

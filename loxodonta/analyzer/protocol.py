@@ -1,4 +1,5 @@
 from abc import abstractmethod
+
 from pyshark.packet.packet import Packet
 
 
