@@ -1,7 +1,9 @@
-import os
-import appdirs
-from loxodonta.logger import loxo_logger
 import json
+import os
+
+import appdirs
+
+from loxodonta.logger import loxo_logger
 
 DEFAULT_CONFIG = {
     "neo4j_url": "bolt://127.0.0.1:7687",

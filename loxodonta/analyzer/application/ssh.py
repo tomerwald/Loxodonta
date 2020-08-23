@@ -1,4 +1,3 @@
-from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.analyzer import network, application
 from loxodonta.analyzer.fact import Entity, Connection
 

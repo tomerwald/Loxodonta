@@ -1,19 +1,19 @@
-import click
 import functools
 
+import click
 import pyshark
 import tqdm
 
 from loxodonta.analyzer import Analyzer
-# from loxodonta.analyzer.application import HTTP, DNS, SSH, HTTPS, SMB
-from loxodonta.analyzer.data_link import Ethernet, ARP
-from loxodonta.analyzer.transport import TCP, UDP
+from loxodonta.analyzer.application import all as application_protocols
+from loxodonta.analyzer.data_link import all as data_link_protocols
+from loxodonta.analyzer.transport import all as transport_protocols
+from loxodonta.analyzer.network import all as network_protocols
 
 from loxodonta.analyzer.fact import Entity, Connection
+from loxodonta.config import LoxoConfig
 from loxodonta.data_loader.loader import Neo4jConnector
 from loxodonta.logger import loxo_logger
-import os
-from loxodonta.config import LoxoConfig
 
 
 @click.command()
@@ -32,10 +32,10 @@ def loxodonta_config(verbose, **kwargs):
 
 def _parse_layer_analyzers(data_link, transport, network, application):
     analyzers = []
-    analyzers += [Ethernet, ARP] if data_link else []
-    analyzers += [UDP, TCP] if transport else []
-    analyzers += [] if network else []
-    analyzers += [] if application else []
+    analyzers += data_link_protocols if data_link else []
+    analyzers += transport_protocols if transport else []
+    analyzers += network_protocols if network else []
+    analyzers += application_protocols if application else []
     return Analyzer(*analyzers)
 
 
@@ -62,6 +62,7 @@ def loxo_run(pcap_path, **layer_options):
     try:
         with pyshark.FileCapture(pcap_path) as cap:
             facts = functools.reduce(lambda x, y: x + y, [x for x in analyzer.analyze_file_capture(cap)])
+        loxo_logger.info("Saving facts")
         _save_facts(neo4j_connector, facts)
     except pyshark.capture.capture.TSharkCrashException as e:
         loxo_logger.error(e)

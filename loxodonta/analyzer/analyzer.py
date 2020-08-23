@@ -24,7 +24,7 @@ class Analyzer:
                 analyzers_to_run += self.layer_subscriptions[layer.layer_name]
             else:
                 loxo_logger.debug(f"Unselected layer: {layer.layer_name}")
-        return functools.reduce(lambda x, y: x + y, [proto().analyze(packet) for proto in analyzers_to_run], [])
+        return functools.reduce(lambda x, y: x + y, [proto().analyze(packet) for proto in analyzers_to_run])
 
     def analyze_file_capture(self, capture):
         loxo_logger.info(f"Analyzing packets from capture")
