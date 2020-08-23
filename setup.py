@@ -13,5 +13,6 @@ setup(
     entry_points='''
             [console_scripts]
             loxo_config=loxodonta:loxodonta_config
+            loxo=loxodonta:loxo_run
         '''
 )
