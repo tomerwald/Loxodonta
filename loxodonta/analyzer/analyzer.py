@@ -6,7 +6,14 @@ from loxodonta.logger import loxo_logger
 
 
 class Analyzer:
+    """
+    this object is responsible for the digestion of network packets
+    """
+
     def __init__(self, *args):
+        """
+        :param Protocol args: protocol analyzer objects of the desired layers to be analyzed
+        """
         self.protocols = args
 
     @property

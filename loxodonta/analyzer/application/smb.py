@@ -15,7 +15,7 @@ class SMB(network.IPProtocol):
         fact_output = list()
         source, destination = self._get_ip_entities(packet)
         if hasattr(packet.smb2, "ntlmssp_challenge_target_name"):
-            build_number = Entity(application.Entities.BuildNumber, int(packet.smb2.ntlmssp_version_build_number))
+            build_number = Entity(application.Entities.BuildNumber, str(packet.smb2.ntlmssp_version_build_number))
             hostname = Entity(application.Entities.Hostname, str(packet.smb2.ntlmssp_challenge_target_name))
             domain = Entity(application.Entities.Domain, str(packet.smb2.ntlmssp_challenge_target_info_dns_domain_name))
             fact_output.append(Connection(application.Connections.ResolvedHostname, source, hostname))
@@ -28,7 +28,7 @@ class SMB(network.IPProtocol):
         fact_output = list()
         source, destination = self._get_ip_entities(packet)
         if hasattr(packet.smb2, "ntlmssp_auth_username"):
-            build_number = Entity(application.Entities.BuildNumber, int(packet.smb2.ntlmssp_version_build_number))
+            build_number = Entity(application.Entities.BuildNumber, str(packet.smb2.ntlmssp_version_build_number))
             hostname = Entity(application.Entities.Hostname, str(packet.smb2.ntlmssp_auth_hostname))
             target_hostname = Entity(application.Entities.Hostname,
                                      str(packet.smb2.ntlmssp_ntlmv2_response_dns_computer_name))
