@@ -25,7 +25,10 @@ def hash_walk_dict(kwargs):
 
 
 class Entity:
-    def __init__(self, entity_type, entity_id, creation_time=None):
+    """
+    This object represents any network entity such as MAC, IP, OS etc.
+    """
+    def __init__(self, entity_type: str, entity_id: str, creation_time: datetime = None):
         self.entity_type = entity_type
         self.entity_id = entity_id
         self.creation_time = creation_time if creation_time else datetime.now()
@@ -38,7 +41,10 @@ class Entity:
 
 
 class Connection:
-    def __init__(self, connection_type, side_a, side_b, **kwargs):
+    """
+    This object represents any network connection such as ARP resolving or TCP traffic
+    """
+    def __init__(self, connection_type: str, side_a: Entity, side_b: Entity, **kwargs):
         self.connection_type = connection_type
         self.side_a = side_a
         self.side_b = side_b
