@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='loxodonta',
-    version='0.1.0',
+    version='0.1.1',
     description='Network traffic visualization',
     author='Tomer Waldmann',
     author_email='tomer.valdman@gmail.com',
-    packages=['loxodonta'],
+    packages=find_packages(exclude=["dev", "dist"]),
     install_requires=['pyshark', 'tqdm', 'neo4j', "click", "appdirs"],
-    entry_points='''
-            [console_scripts]
-            loxo_config=loxodonta:loxodonta_config
-            loxo=loxodonta:loxo_run
-        '''
+    entry_points={
+        'console_scripts': ['loxo_config=loxodonta.cli:loxodonta_config',
+                            'loxo=loxodonta.cli:loxo_run']
+    }
 )
