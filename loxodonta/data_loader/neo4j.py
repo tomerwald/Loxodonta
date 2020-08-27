@@ -3,6 +3,8 @@ from neo4j import GraphDatabase
 from loxodonta.logger import loxo_logger
 from loxodonta.analyzer.fact import Entity, Connection
 
+CONNECTION_TIMEOUT = 10
+
 
 class Neo4jConnector:
     """
@@ -12,7 +14,7 @@ class Neo4jConnector:
 
     def __init__(self, uri, auth):
         loxo_logger.info(f"Connecting to: {uri}")
-        self.connection = GraphDatabase.driver(uri=uri, auth=auth)
+        self.connection = GraphDatabase.driver(uri=uri, auth=auth, connection_acquisition_timeout=CONNECTION_TIMEOUT)
 
     def run_query(self, cypher_command: str):
         with self.connection.session() as session:
