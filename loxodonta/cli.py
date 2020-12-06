@@ -3,7 +3,7 @@ import functools
 import click
 import pyshark
 import tqdm
-
+import neo4j
 from loxodonta.analyzer import Analyzer
 from loxodonta.analyzer.application import all as application_protocols
 from loxodonta.analyzer.data_link import all as data_link_protocols
@@ -12,7 +12,7 @@ from loxodonta.analyzer.network import all as network_protocols
 
 from loxodonta.analyzer.fact import Entity, Connection
 from loxodonta.config import LoxoConfig
-from loxodonta.data_loader.loader import Neo4jConnector
+from loxodonta.data_loader.neo4j import Neo4jConnector
 from loxodonta.logger import loxo_logger
 
 
@@ -26,7 +26,7 @@ def loxodonta_config(verbose, **kwargs):
     updates = {k: v for k, v in kwargs.items() if v is not None}
     conf.config.update(updates)
     conf.save_config()
-    if verbose:
+    if verbose or not updates:
         print(conf)
 
 
@@ -56,15 +56,17 @@ def _save_facts(connector, facts):
 @click.option("--application", '-a', is_flag=True, default=False, help="digest application layer packets")
 def loxo_run(pcap_path, **layer_options):
     config = LoxoConfig()
-    neo4j_connector = Neo4jConnector(config.config["neo4j_url"],
-                                     auth=(config.config["neo4j_username"], config.config["neo4j_password"]))
     analyzer = _parse_layer_analyzers(**layer_options)
     try:
         with pyshark.FileCapture(pcap_path) as cap:
             facts = functools.reduce(lambda x, y: x + y, [x for x in analyzer.analyze_file_capture(cap)])
-        loxo_logger.info("Saving facts")
+        facts = set(facts)
+        loxo_logger.info(f"Saving {len(facts)} facts")
+        neo4j_connector = Neo4jConnector(config.config["neo4j_url"],
+                                         auth=(config.config["neo4j_username"], config.config["neo4j_password"]))
         _save_facts(neo4j_connector, facts)
+        neo4j_connector.close()
     except pyshark.capture.capture.TSharkCrashException as e:
         loxo_logger.error(e)
-    finally:
-        neo4j_connector.close()
+    except neo4j.exceptions.ServiceUnavailable as e:
+        loxo_logger.error("Failed connecting to database")
