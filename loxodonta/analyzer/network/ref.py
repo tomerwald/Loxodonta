@@ -6,4 +6,8 @@ class Entities:
 
 
 class Connections:
-    pass
+    VPNGateway = "VPNGateway"
+    VPNMember = "VPNMember"
+    SubnetGateway = "Gateway"
+    SubnetMember = "SubnetMember"
+

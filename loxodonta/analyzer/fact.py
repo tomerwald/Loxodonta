@@ -28,22 +28,26 @@ class Entity:
     """
     This object represents any network entity such as MAC, IP, OS etc.
     """
-    def __init__(self, entity_type: str, entity_id: str, creation_time: datetime = None):
+
+    def __init__(self, entity_type: str, entity_id: str, creation_time: datetime = None, **kwargs):
         self.entity_type = entity_type
         self.entity_id = entity_id
         self.creation_time = creation_time if creation_time else datetime.now()
+        self.kwargs = kwargs
 
     def __eq__(self, other):
         return self.entity_type == other.entity_type and self.entity_id == other.entity_id
 
     def __hash__(self):
-        return hash(hash(self.entity_type) + hash(self.entity_type))
+        kwargs_hash = hash_walk_dict(self.kwargs)
+        return hash(hash(self.entity_type) + hash(self.entity_type) + kwargs_hash)
 
 
 class Connection:
     """
     This object represents any network connection such as ARP resolving or TCP traffic
     """
+
     def __init__(self, connection_type: str, side_a: Entity, side_b: Entity, **kwargs):
         self.connection_type = connection_type
         self.side_a = side_a
