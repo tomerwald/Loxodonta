@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='loxodonta',
-    version='0.1.1',
+    version='0.1.2',
     description='Network traffic visualization',
     author='Tomer Waldmann',
     author_email='tomer.valdman@gmail.com',
