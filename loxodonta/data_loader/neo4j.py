@@ -25,7 +25,7 @@ class Neo4jConnector:
         return self.run_query(f'merge (a:{entity.entity_type} {{entity_id:"{entity.entity_id}"}}) return id(a)')
 
     @staticmethod
-    def _parse_kwargs_to_neo4j(connection: Connection, remote_connection):
+    def _parse_kwargs_to_neo4j(connection: Connection or Entity, remote_connection):
         params_str = ""
         for k, v in connection.kwargs.items():
             if isinstance(v, str):
@@ -35,6 +35,14 @@ class Neo4jConnector:
                 v = list(set(v))
             params_str += f'set p.{k} = {v}\r\n'
         return params_str
+
+    def update_node_params(self, node: Entity, remote_connection):
+        connection_args = self._parse_kwargs_to_neo4j(node, remote_connection)
+        self.run_query(f'''
+            MATCH (p:{node.entity_type} {{entity_id:"{node.entity_id}"}})
+            {connection_args}
+            RETURN p;
+            ''')
 
     def update_connection_params(self, connection: Connection, remote_connection):
         connection_args = self._parse_kwargs_to_neo4j(connection, remote_connection)
@@ -55,6 +63,10 @@ class Neo4jConnector:
             ''')
         if connection.kwargs:
             self.update_connection_params(connection, query_output[0][0])
+        if connection.side_a.kwargs:
+            self.update_node_params(connection.side_a, query_output[0][0])
+        if connection.side_b.kwargs:
+            self.update_node_params(connection.side_b, query_output[0][0])
 
     def close(self):
         self.connection.close()

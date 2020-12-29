@@ -15,3 +15,5 @@ class Connections:
     ArpResolve = "ArpResolve"
     PhysicalConnection = "PhysicalConnection"
     CDPAnnouncement = "CDPAnnouncement"
+    VlanMember = "VlanMember"
+

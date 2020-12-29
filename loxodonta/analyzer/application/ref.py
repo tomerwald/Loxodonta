@@ -22,4 +22,5 @@ class Connections:
     LocalUser = "LocalUser"
     DomainUser = "DomainUser"
     DomainComputer = "DomainComputer"
+    DomainController = "DomainController"
     SMB = "SMBConnection"
